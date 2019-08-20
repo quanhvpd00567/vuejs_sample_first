@@ -1,7 +1,8 @@
 import axios from "axios";
-export default HTTP = axios.create({
-    baseURL: '',
+const http = axios.create({
+    baseURL: 'http://jsonplaceholder.typicode.com/',
     headers: {
         Authorization: 'Bearer {token}'
     }
 })
+export default http

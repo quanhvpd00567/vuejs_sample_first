@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueRouter from 'vue-router'
 import routers from './routers'
+import base from './store/http'
 
 Vue.use(BootstrapVue)
 Vue.use(VueRouter)
@@ -13,6 +14,8 @@ const router = new VueRouter({
   routes: routers,
   mode: 'history'
 })
+
+Vue.prototype.$http = base
 
 new Vue({
   el: '#app',
