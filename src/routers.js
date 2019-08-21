@@ -1,25 +1,13 @@
 import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Contact from './views/Contact.vue'
+import ViewLogin from './views/Login.vue'
 
 const router = [
     {
         path: '/',
         name: 'home',
-        component: Home,
-        meta: {
-            title: 'Home Page - Example App',
-            metaTags: [
-                {
-                    name: 'description',
-                    content: 'The home page of our example app.'
-                },
-                {
-                    property: 'og:description',
-                    content: 'The home page of our example app.'
-                }
-            ]
-        }
+        component: Home
     },
     {
         path: '/about',
@@ -31,6 +19,13 @@ const router = [
         name: 'contact',
         component: Contact
     },
+    {
+        path: '/login',
+        name: 'login',
+        component: ViewLogin
+    },
+    // otherwise redirect to home
+    { path: '*', redirect: '/' }
 ]
 
 export default router

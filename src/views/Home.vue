@@ -1,19 +1,26 @@
 <template>
     <div id="home">
-        <b-table striped hover :items="items" :fields="fields"></b-table>
+        <div v-if="items.length > 0">
+            <b-table striped hover :items="items" :fields="fields">
+                <template slot="[show_details]" slot-scope="row">
+                    <b-button size="sm" @click="row.toggleDetails" variant="primary">
+                        Edit
+                    </b-button>
+                </template>
+            </b-table>
+        </div>
     </div>
 </template>
 <script>
 export default {
-     name: 'Home',
-     head () {
-        return {
-            title: "My page title",
-            meta: [
-                // { name: ‘description’, content: ‘My page description’ }
-            ]
-           
-        }
+    name: 'Home',
+    metaInfo: {
+      title: 'My Example App',
+      titleTemplate: '%s - Yay!',
+      meta: [
+            {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+            {name: 'description', content: 'I have things here on my site.'}
+        ]
     },
     data(){
         return {
@@ -23,10 +30,13 @@ export default {
                     label: 'ID ne'
                 },
                 {
-                    key: 'title',
-                    label: 'Title ne'
+                    key: 'full_name',
+                    label: 'Full name'
+                },
+                {
+                    key: 'show_details',
+                    label: 'View detail'
                 }
-        
             ],
             items: []
         }
@@ -36,9 +46,14 @@ export default {
     },
     methods: {
          search(){
-            this.$http.get('posts')
+            let config = {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            }
+            this.$http.get('users', config)
             .then((response) => {
-                this.items = response.data
+                this.items = response.data.data
             }).catch((e) => {
                 console.error(e)
             })

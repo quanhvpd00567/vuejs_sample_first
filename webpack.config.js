@@ -1,5 +1,6 @@
 var path = require('path')
 var webpack = require('webpack')
+const Dotenv = require('dotenv-webpack');
 
 module.exports = {
   entry: './src/main.js',
@@ -84,15 +85,20 @@ module.exports = {
     hints: false
   },
   devtool: '#eval-source-map',
-  css: {
-    loaderOptions: {
-      sass: {
-        data:`
-            @import "@/scss/app.scss";
-        `
-      }
-    }
-  }
+  plugins: [
+    new Dotenv({
+      path: '.env'
+    })
+  ]
+  // css: {
+  //   loaderOptions: {
+  //     sass: {
+  //       data:`
+  //           @import "@/scss/app.scss";
+  //       `
+  //     }
+  //   }
+  // }
 }
 
 if (process.env.NODE_ENV === 'production') {
@@ -115,3 +121,11 @@ if (process.env.NODE_ENV === 'production') {
     })
   ])
 }
+
+// if (process.env.NODE_ENV === 'development'){
+//   module.exports.plugins = new webpack.DefinePlugin({
+//     'process.env': {
+//       VUE_APP_SECRET: 'aaaaaaaaaaaaaaaaaaaaaaa'
+//     }
+//   })
+// }
