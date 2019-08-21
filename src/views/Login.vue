@@ -37,33 +37,23 @@ export default {
     data(){
         return {
             form: {
-                email: 'bob.gulgowski@brekke.biz',
-                password: '12345678'
+                email: 'quanlybanthan@gmail.com',
+                password: '123456'
             }
         }
     },
-    // mounted(){
-    //     console.log(localStorage.getItem('token'));
-    // },
+    mounted(){
+        this.$store.commit('setIsAuthen', false)
+    },
     methods: {
         login(){
-            // return new Promise((resolve, reject) => {
-            
-            // })
-            this.$http.post('session',this.form)
-            .then((response) => {
-                if (response.status === 200){
-                    let token = response.data.jwt
-                    // Set token to localstorage
-                    localStorage.setItem('token', token)
-                    this.$emit('authenticated', true)
-                    // Set token to headers api
-                    this.$http.defaults.headers.common['Authorization'] = token
-                    this.$router.push('/')
-                }
+            this.$store.dispatch('a_login', this.form)
+            .then(response => {
+                console.log(response)
+                this.$router.push({ name: 'home' })
             })
-            .catch((error) => {
-                localStorage.removeItem('token')
+            .catch(error => {
+                  console.log(error)  
             })
         }
     }

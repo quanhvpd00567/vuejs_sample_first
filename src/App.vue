@@ -11,24 +11,26 @@
 
 <script>
   import HeadHoder from './components/head'
+  import {mapGetters} from 'Vuex'
+
   export default {
     name: 'app',
     components: {HeadHoder},
-    mounted(){
-      this.is_show_head = this.$route.name === 'login' ? false : true
-      console.log(this.$on('authenticated'));
-    },
     data () {
       return {
-        is_show_head: true,
-        authenticated: false
+        // is_show_head: true,
+      }
+    },
+    // mounted(){
+    //   this.is_show_head = this.$route.name === 'login' ? false : true
+    // },
+    computed: {
+      is_show_head(){
+        return this.$store.getters.getIsAuthen
       }
     },
     methods: {
-      getToken(){
-        let token = localStorage.getItem('token')
-        return token
-      }
+     
     }
   }
 </script>
