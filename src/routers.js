@@ -2,12 +2,16 @@ import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Contact from './views/Contact.vue'
 import ViewLogin from './views/Login.vue'
+import ViewRegister from './views/Register.vue'
 
 const router = [
     {
         path: '/',
         name: 'home',
-        component: Home
+        component: Home,
+        meta: {
+            requiresAuth: true,
+        }
     },
     {
         path: '/about',
@@ -22,7 +26,18 @@ const router = [
     {
         path: '/login',
         name: 'login',
-        component: ViewLogin
+        component: ViewLogin,
+        meta: {
+            viewLogin: true
+        }
+    },
+    {
+        path: '/register',
+        name: 'register',
+        component: ViewRegister,
+        meta: {
+            viewLogin: true
+        }
     },
     // otherwise redirect to home
     { path: '*', redirect: '/' }

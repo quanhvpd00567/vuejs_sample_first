@@ -1,6 +1,6 @@
 <template>
     <div id="home">
-        <div v-if="items.length > 0">
+        <div v-if="items.length">
             <b-table striped hover :items="items" :fields="fields">
                 <template slot="[show_details]" slot-scope="row">
                     <b-button size="sm" @click="row.toggleDetails" variant="primary">
@@ -12,16 +12,9 @@
     </div>
 </template>
 <script>
+import {LIST_USER} from './../store/mutation-type'
 export default {
     name: 'Home',
-    metaInfo: {
-      title: 'My Example App',
-      titleTemplate: '%s - Yay!',
-      meta: [
-            {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-            {name: 'description', content: 'I have things here on my site.'}
-        ]
-    },
     data(){
         return {
             fields: [
@@ -37,25 +30,32 @@ export default {
                     key: 'show_details',
                     label: 'View detail'
                 }
-            ],
-            items: []
+            ]
         }
     },
-    created(){
-        // this.search()
+    metaInfo: {
+      title: 'aaaaaaaaaaaaaaaa',
+      titleTemplate: '%s - haong.com!',
+      meta: [
+            {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+            {name: 'description', content: 'I have things here on my site.'}
+        ]
+    },
+    computed: {
+        items(){
+            return this.$store.getters.listUser
+        }
+    },
+    mounted(){
+        this.search()
     },
     methods: {
          search(){
-            let config = {
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
-            }
-            this.$http.get('users', config)
-            .then((response) => {
-                this.items = response.data.data
-            }).catch((e) => {
-                console.error(e)
+            this.$store.dispatch(LIST_USER)
+            .then((rep) => {
+            })
+            .catch((error) => {
+                console.log(error)
             })
         }
     }

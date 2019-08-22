@@ -29,31 +29,30 @@
 </template>
 
 <script>
-
-import axios from 'axios'
-
+import {LOGIN} from './../store/mutation-type'
 export default {
     name: 'LoginHoder',
     data(){
         return {
             form: {
-                email: 'quanlybanthan@gmail.com',
-                password: '123456'
+                email: 'bob.gulgowski@brekke.biz',
+                password: '12345678'
             }
         }
     },
     mounted(){
         this.$store.commit('setIsAuthen', false)
     },
+    // computed: {
+        
+    // },
     methods: {
         login(){
-            this.$store.dispatch('a_login', this.form)
+            this.$store.dispatch(LOGIN, this.form)
             .then(response => {
-                console.log(response)
                 this.$router.push({ name: 'home' })
             })
             .catch(error => {
-                  console.log(error)  
             })
         }
     }

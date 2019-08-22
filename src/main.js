@@ -4,7 +4,7 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueRouter from 'vue-router'
-import routers from './routers'
+import routes from './routers'
 import VueMeta from 'vue-meta'
 import { store } from './store/store';
 
@@ -18,19 +18,21 @@ Vue.use(VueMeta, {
 
 Vue.config.devtools = true
 const router = new VueRouter({
-  routes: routers,
+  routes,
   mode: 'history'
 })
 
-// router.beforeEach((to, from, next) => {
-//   const publicPages = ['login'];
-//   const authRequired = !publicPages.includes(to.name);
-//   const loggedIn = localStorage.getItem('token');
-//   if (authRequired && !loggedIn) {
-//     return next('/login');
-//   }
-//   next();
-// })
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    !store.getters.loggedIn ? next({name: 'login'}) : next()
+  } else if (to.matched.some(record => record.meta.requiresVisitor)) {
+
+  } else if (to.matched.some(record => record.meta.viewLogin)){
+    store.getters.loggedIn ? next({name: 'home'}) : next()
+  }else {
+    next()
+  }
+})
 
 new Vue({
   el: '#app',
