@@ -44,6 +44,11 @@
               <country-flag country="jp" />
             </b-link>
           </li>
+          <li class="nav-item">
+            <b-link class="nav-link">
+              <country-flag country="kr" />
+            </b-link>
+          </li>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
