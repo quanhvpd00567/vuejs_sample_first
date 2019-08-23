@@ -7,7 +7,7 @@ import VueRouter from 'vue-router'
 import routes from './routers'
 import VueMeta from 'vue-meta'
 import { store } from './store/store';
-
+import i18n from './i18n.js'
 
 Vue.use(BootstrapVue)
 Vue.use(VueRouter)
@@ -38,5 +38,6 @@ new Vue({
   el: '#app',
   router,
   store,
+  i18n,
   render: h => h(App)
 })
