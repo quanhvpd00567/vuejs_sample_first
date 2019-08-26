@@ -10,7 +10,7 @@ const router = [
         name: 'home',
         component: Home,
         meta: {
-            requiresAuth: true,
+            requiresAuth: false,
         }
     },
     {

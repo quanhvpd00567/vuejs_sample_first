@@ -6,6 +6,7 @@
       </router-link>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
+        <!-- list menu -->
         <b-navbar-nav>
           <li class="nav-item">
             <router-link to="/about" class="nav-link">About</router-link>
@@ -14,42 +15,33 @@
             <router-link to="/contact" class="nav-link">Contact</router-link>
           </li>
         </b-navbar-nav>
-        <!-- Right aligned nav items -->
+        <!-- end list menu -->
+        <!-- list flag -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-form>
-            <b-form-input size="sm" class="mr-sm-2" v-model="keywork" placeholder="Search"></b-form-input>
-            <b-button size="sm" class="my-2 my-sm-0" variant="success">Search</b-button>
-          </b-nav-form>
-        </b-navbar-nav>
-        <b-navbar-nav>
           <li class="nav-item">
-            <router-link to="/about" class="nav-link">About</router-link>
+            <b-link v-if="loggedIn" v-on:click="logout" class="nav-link">Logout</b-link>
+            <router-link v-if="!loggedIn" to="/login" class="nav-link">Login</router-link>
           </li>
-          <li class="nav-item">
-            <b-link v-if="isLogin" v-on:click="logout" class="nav-link">Logout</b-link>
-            <router-link v-if="!isLogin" to="/login" class="nav-link">Login</router-link>
-          </li>
-          <li class="nav-item" v-if="!isLogin">
+          <li class="nav-item" v-if="!loggedIn">
             <router-link :to="{name: 'register'}" class="nav-link">Register</router-link>
           </li>
-        </b-navbar-nav>
-        <b-navbar-nav>
           <li class="nav-item">
-            <b-link class="nav-link">
+            <b-link class="flag_c nav-link">
               <country-flag country="vn" />
             </b-link>
           </li>
           <li class="nav-item">
-            <b-link class="nav-link">
+            <b-link class="nav-link flag_c">
               <country-flag country="jp" />
             </b-link>
           </li>
           <li class="nav-item">
-            <b-link class="nav-link">
+            <b-link class="nav-link flag_c">
               <country-flag country="kr" />
             </b-link>
           </li>
         </b-navbar-nav>
+        <!-- end list flag -->
       </b-collapse>
     </b-navbar>
   </div>
@@ -57,31 +49,27 @@
 <script>
 import { LOGOUT } from "./../store/mutation-type";
 import CountryFlag from "vue-country-flag";
+import { mapGetters } from "vuex";
+
 export default {
   name: "headHoder",
-  data() {
-    return {
-      keywork: null
-    };
-  },
   components: {
     CountryFlag
   },
-  computed: {
-    isLogin() {
-      return this.$store.getters.loggedIn;
-    }
-  },
+  computed: mapGetters(["loggedIn"]),
   methods: {
     logout() {
       this.$store.dispatch(LOGOUT).then(res => {
         this.$router.push({ name: "login" });
       });
-    },
-    locale() {
-      console.log(111);
     }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.flag_c {
+  padding: 0px 5px !important;
+}
+</style>
 

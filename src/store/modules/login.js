@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {LOGIN, LOGOUT} from './../mutation-type'
+import { LOGIN, LOGOUT } from './../mutation-type'
 const m_login = {
     state: {
         token: localStorage.getItem('token') || null,
@@ -9,15 +9,15 @@ const m_login = {
         getIsAuthen(state) {
             return state.is_authen
         },
-        loggedIn(state){
+        loggedIn(state) {
             return state.token !== null
         }
     },
     mutations: {
-        setIsAuthen(state, isLogin){
+        setIsAuthen(state, isLogin) {
             state.is_authen = isLogin
         },
-        setToken(state, token){
+        setToken(state, token) {
             state.token = token
         },
         destroyToken(state) {
@@ -26,26 +26,26 @@ const m_login = {
     },
     actions: {
         // Login action
-        [LOGIN](context, payload){
+        [LOGIN](context, payload) {
             return new Promise((resolve, reject) => {
                 axios.post('session', payload)
-                .then((response) => {
-                    if (response.status === 200){
-                        const token = response.data.jwt
-                        // Set token to localstorage
-                        localStorage.setItem('token', token)
-                        context.commit('setIsAuthen', true)
-                        // Set token to headers api
-                        context.commit('setToken', token)
-                        resolve(response)
-                    }
-                })
-                .catch((error) => {
-                    reject(error)
-                })
+                    .then((response) => {
+                        if (response.status === 200) {
+                            const token = response.data.jwt
+                            // Set token to localstorage
+                            localStorage.setItem('token', token)
+                            context.commit('setIsAuthen', true)
+                            // Set token to headers api
+                            context.commit('setToken', token)
+                            resolve(response)
+                        }
+                    })
+                    .catch((error) => {
+                        reject(error)
+                    })
             })
         },
-        [LOGOUT](context){
+        [LOGOUT](context) {
             return new Promise((resolve, reject) => {
                 localStorage.removeItem('token')
                 context.commit('destroyToken')

@@ -24,12 +24,12 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    !store.getters.loggedIn ? next({name: 'login'}) : next()
+    !store.getters.loggedIn ? next({ name: 'login' }) : next()
   } else if (to.matched.some(record => record.meta.requiresVisitor)) {
 
-  } else if (to.matched.some(record => record.meta.viewLogin)){
-    store.getters.loggedIn ? next({name: 'home'}) : next()
-  }else {
+  } else if (to.matched.some(record => record.meta.viewLogin)) {
+    store.getters.loggedIn ? next({ name: 'home' }) : next()
+  } else {
     next()
   }
 })
